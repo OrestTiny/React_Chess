@@ -1,0 +1,24 @@
+h1 {
+  text-align: center;
+  color: brown;
+}
+
+.chess-board {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  max-width: 700px;
+  margin: auto;
+}
+
+.chess-cell {
+  width: 100%;
+  aspect-ratio: 1/1;
+
+  &.white-cell {
+    background-color: #78e08f;
+  }
+
+  &.black-cell {
+    background-color: #b71540;
+  }
+}
