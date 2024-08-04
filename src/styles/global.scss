@@ -18,3 +18,23 @@ code {
   margin: 0 auto;
   padding: 0 20px;
 }
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  gap: 1px;
+  max-width: 400px;
+  background-color: rgb(231, 223, 223);
+  margin: 40px auto;
+
+  .item {
+    aspect-ratio: 1 / 1;
+    border: 1px solid snow;
+    cursor: pointer;
+
+    &.item-bg {
+      background-color: rebeccapurple;
+    }
+  }
+}
