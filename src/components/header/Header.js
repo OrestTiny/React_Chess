@@ -30,8 +30,11 @@ function Header() {
   return (
     <header>
       <div className='container'>
-        <img src={logo} alt='logo' />
-        <Navigation navData={navData} />
+        <div className='header-wrap'>
+          <img src={logo} alt='logo' />
+          <Navigation navData={navData} />
+          <a href="/">Call to action</a>
+        </div>
       </div>
     </header>
   )

@@ -1,20 +1,25 @@
-$container-bg-color: #f8f8f8;
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: $container-bg-color;
-}
-
 header {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
-}
+  background-color: rgb(231, 208, 177);
 
-img {
-  width: 100px;
-  height: auto;
+  img {
+    width: 100px;
+    height: auto;
+  }
+
+  .header-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+
+  .navigation {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+
+  }
 }
