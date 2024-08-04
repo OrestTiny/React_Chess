@@ -1,9 +1,109 @@
 import Figure from "./Figure";
 
 const boardLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-const figureAll = [
-  { id: 'wp',
-    
+const figureWhite = [
+  {
+    id: 'wr',
+    letter: "a",
+    number: 8
+  },
+  {
+    id: 'wn',
+    letter: "b",
+    number: 8
+  },
+  {
+    id: 'wb',
+    letter: "c",
+    number: 8
+  },
+  {
+    id: 'wq',
+    letter: "d",
+    number: 8
+  },
+  {
+    id: 'wk',
+    letter: "e",
+    number: 8
+  },
+  {
+    id: 'wb',
+    letter: "f",
+    number: 8
+  },
+  {
+    id: 'wn',
+    letter: "g",
+    number: 8
+  },
+  {
+    id: 'wr',
+    letter: "h",
+    number: 8
+  },
+  {
+    id: 'wp',
+    letter: "a",
+    number: 7
+  },
+  {
+    id: 'wp',
+    letter: "b",
+    number: 7
+  },
+  {
+    id: 'wp',
+    letter: "c",
+    number: 7
+  },
+  {
+    id: 'wp',
+    letter: "d",
+    number: 7
+  },
+  {
+    id: 'wp',
+    letter: "e",
+    number: 7
+  },
+  {
+    id: 'wp',
+    letter: "f",
+    number: 7
+  },
+  {
+    id: 'wp',
+    letter: "g",
+    number: 7
+  },
+  {
+    id: 'wp',
+    letter: "h",
+    number: 7
+  }
+]
+
+const figureBlack = [
+  {
+    id: 'br',
+    letter: "a",
+    number: 1
+  },
+  {
+    id: 'bp',
+    letter: "h",
+    number: 2
+  },
+  {
+    id: 'bp',
+    letter: "a",
+    number: 2
+  },
+  {
+    id: 'bp',
+    letter: "b",
+    number: 2
   }
 ]
 
@@ -59,7 +159,15 @@ function Board() {
   return (
     <div className="board">
       {allBoard}
-      <Figure />
+
+      {figureWhite.map(item => (
+        <Figure itemData={item} key={item.id + item.letter + item.number} positionData={positionsFigure} />
+      ))}
+
+      {figureBlack.map(item => (
+        <Figure itemData={item} key={item.id + item.letter + item.number} positionData={positionsFigure} />
+      ))}
+
     </div>
   )
 }

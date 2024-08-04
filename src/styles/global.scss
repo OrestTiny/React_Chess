@@ -27,11 +27,11 @@ code {
   max-width: 400px;
   background-color: rgb(231, 223, 223);
   margin: 40px auto;
+  position: relative;
 
   .item {
     aspect-ratio: 1 / 1;
     border: 1px solid snow;
-    cursor: pointer;
     position: relative;
 
     &.item-bg {
@@ -55,5 +55,18 @@ code {
         right: 5px;
       }
     }
+
+    &-figure {
+      position: absolute;
+      width: 49px;
+      height: 49px;
+      transform: translate(-5%, -100%);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 75%;
+      z-index: 2;
+      cursor: pointer;
+    }
   }
+
 }
