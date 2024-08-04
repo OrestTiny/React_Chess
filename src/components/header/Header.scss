@@ -1,0 +1,20 @@
+$container-bg-color: #f8f8f8;
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: $container-bg-color;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+img {
+  width: 100px;
+  height: auto;
+}
