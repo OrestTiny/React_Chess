@@ -1,5 +1,11 @@
+import Figure from "./Figure";
 
 const boardLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+const figureAll = [
+  { id: 'wp',
+    
+  }
+]
 
 function Board() {
   const stepSize = 12.5;
@@ -8,7 +14,10 @@ function Board() {
     return (
       <div className={`item ${couples}`} key={el} onClick={() => {
         console.log(squareCoord);
-      }}></div>
+      }}>
+        {squareCoord.letter === 'a' && <span className="item-list-number">{squareCoord.number}</span>}
+        {squareCoord.number === 8 && <span className="item-list-letter">{squareCoord.letter}</span>}
+      </div>
     )
   };
   let allBoard = [];
@@ -35,7 +44,7 @@ function Board() {
       y: stepSize * boardNumber
     }
 
-    if (boardLetterIndex == 7) {
+    if (boardLetterIndex === 7) {
       boardLetterIndex = 0;
       boardNumber++;
     } else {
@@ -50,6 +59,7 @@ function Board() {
   return (
     <div className="board">
       {allBoard}
+      <Figure />
     </div>
   )
 }

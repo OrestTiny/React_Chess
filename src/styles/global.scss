@@ -32,9 +32,28 @@ code {
     aspect-ratio: 1 / 1;
     border: 1px solid snow;
     cursor: pointer;
+    position: relative;
 
     &.item-bg {
       background-color: rebeccapurple;
+    }
+
+    span {
+      position: absolute;
+      font-weight: 600;
+      pointer-events: none;
+    }
+
+    &-list {
+      &-number {
+        top: 3px;
+        left: 5px;
+      }
+
+      &-letter {
+        bottom: 3px;
+        right: 5px;
+      }
     }
   }
 }
