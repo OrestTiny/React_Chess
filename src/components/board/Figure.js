@@ -29,7 +29,6 @@ const images = {
 
 function Figure(props) {
   const findCoord = props.positionData.find(item => item.letter === props.itemData.letter && item.number === props.itemData.number)
-
   const imageSrc = images[props.itemData.id];
 
   if (!imageSrc) {
@@ -42,8 +41,18 @@ function Figure(props) {
     backgroundImage: `url(${imageSrc})`,
   };
 
+  const handleClick = (el) => {
+    props.onFigureClick({ id: props.itemData.id, letter: props.itemData.letter, number: props.itemData.number });
+
+    document.querySelectorAll('.item-figure.active').forEach(item => {
+      item.classList.remove('active');
+    });
+
+    el.target.classList.add('active');
+  };
+
   return (
-    <div className="item-figure" style={styles}></div>
+    <div className="item-figure" style={styles} onClick={handleClick} ></div >
   )
 }
 

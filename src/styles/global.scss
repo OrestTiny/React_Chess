@@ -66,6 +66,12 @@ code {
       background-size: 75%;
       z-index: 2;
       cursor: pointer;
+
+      &.active {
+        position: absolute;
+        inset: 0;
+        background-color: rgba(5, 53, 17, 0.5);
+      }
     }
   }
 
