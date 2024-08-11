@@ -1,20 +1,15 @@
 import Figure from "./Figure";
-import React, { useState } from 'react';
-import { figureWhiteBlack, boardLetters, boardNumbers } from "./mock/figureWhiteBlack";
+import React, { useEffect, useState } from 'react';
+import { figureWhiteBlack, boardLetters } from "./mock/figureWhiteBlack";
+import moveLogic from "./logic/moveLogic";
 
-const figureAction = {
-  wp: {
-    letter: [0],
-    number: [1, 2]
-  },
-  bp: {
-    letter: [0],
-    number: [-1, -2]
-  }
-}
+const figureCurrSide = 'white';
 
 function Board() {
   const [figurePosition, setPositionsFigure] = useState(figureWhiteBlack);
+  const [board, triggerBoard] = useState([]);
+  const [currentSide, changeSide] = useState(figureCurrSide);
+
   const stepSize = 12.5;
   let positionsFigure = [];
   let currentFigure;
@@ -22,7 +17,6 @@ function Board() {
     return (
       <div className={`item ${couples}`} key={el} onClick={() => {
         if (!(currentFigure && squareCoord)) return;
-        if (figureActionCalc({ currentFigure, squareCoord })) return;
 
         if (currentFigure) {
           setPositionsFigure(prevState => {
@@ -82,47 +76,22 @@ function Board() {
     allBoard.push(square(i, couples, squareCoord));
   }
 
-  const figureActionCalc = (props) => {
-    const { currentFigure, squareCoord } = props;
-    const currentFigureAction = figureAction[currentFigure.id];
-    const startNumberCheck = boardNumbers.indexOf(currentFigure.number);
-    const endNumberCheck = boardNumbers.indexOf(squareCoord.number);
-    let flag = true;
-
-    if (currentFigure.id.split('')[0] === 'w') {
-      currentFigureAction.number.forEach((item) => {
-        if (startNumberCheck >= endNumberCheck && startNumberCheck <= endNumberCheck + item && currentFigure.letter === squareCoord.letter) {
-          flag = false
-        }
-      })
-    } else {
-      currentFigureAction.number.forEach((item) => {
-        if (startNumberCheck <= endNumberCheck && startNumberCheck + item >= endNumberCheck && currentFigure.letter === squareCoord.letter) {
-          flag = false
-        }
-      })
-    }
-
-    return flag
-  }
+  useEffect(() => {
+    triggerBoard(allBoard);
+  }, []);
 
   const handleFigureClick = (data) => {
     currentFigure = data;
 
-    console.log(data);
-
-    console.log(figurePosition);
+    console.log(board);
 
 
-    // setPositionsFigure(prevState => {
-
-    // });
   };
 
 
   return (
     <div className="board">
-      {allBoard}
+      {board}
 
       {figurePosition.map((item, index) => (
         <Figure itemData={item} key={item.id + index} positionData={positionsFigure} onFigureClick={handleFigureClick} />
