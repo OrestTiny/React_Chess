@@ -7,9 +7,8 @@ function Board() {
   const [figurePosition, setPositionsFigure] = useState(
     JSON.parse(JSON.stringify(figureWhiteBlack))
   );
-  const [activeCells, setAciveCells] = useState([]);
+  const [activeCells, setActiveCells] = useState([]);
   const [actionStarted, setActionStarted] = useState(-1);
-
   const [isWhiteSide, setIsWhiteSide] = useState(true);
 
   const stepSize = 12.5;
@@ -32,8 +31,9 @@ function Board() {
               oldFigures[actionStarted].number = squareCoord.number;
               return oldFigures;
             });
-            setAciveCells([]);
+            setActiveCells([]);
             setActionStarted(-1);
+            setIsWhiteSide(!isWhiteSide);
           }
         }}
       >
@@ -82,7 +82,7 @@ function Board() {
   }
 
   const handleFigureClick = (data, index) => {
-    identificateAvailableCells({ data, figurePosition, setAciveCells });
+    identificateAvailableCells({ data, figurePosition, setActiveCells });
     setActionStarted(index);
   };
 

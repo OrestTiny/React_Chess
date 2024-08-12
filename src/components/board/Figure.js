@@ -42,7 +42,7 @@ function Figure(props) {
     left: findCoord ? `${findCoord.x}%` : "0%",
     top: findCoord ? `${findCoord.y}%` : "0%",
     backgroundImage: `url(${imageSrc})`,
-    "pointer-events": props.isEnemy ? "none" : "all",
+    pointerEvents: props.isEnemy ? "none" : "all",
   };
 
   const handleClick = (el) => {

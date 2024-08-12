@@ -4,10 +4,8 @@ import {
   figureWhiteBlack,
 } from "../mock/figureWhiteBlack";
 
-// number is y, letter is x
-
 export function identificateAvailableCells(props) {
-  const { data: curFg, setAciveCells } = props;
+  const { data: curFg, figurePosition, setActiveCells } = props;
 
   const x = boardLetters.findIndex((item) => item === curFg.letter);
   const y = boardNumbers.findIndex((item) => item === curFg.number);
@@ -17,8 +15,32 @@ export function identificateAvailableCells(props) {
       id === curFg.id && number === curFg.number && letter === curFg.letter
   );
 
+
+  const checkEnemyFigure = (positionAttack) => {
+    const attackCoord = positionAttack.map((item) => {
+      return figurePosition.find(positionEnemy =>
+        positionEnemy.letter === boardLetters[item.x] &&
+        positionEnemy.number === boardNumbers[item.y] &&
+        positionEnemy.id.split('')[0] !== item.id.split('')[0])
+    }).filter(position => position !== undefined);
+
+    attackCoord.map(item => {
+      availableXY.push({
+        x: boardLetters.indexOf(item.letter),
+        y: boardNumbers.indexOf(item.number),
+      })
+    })
+  }
+
   if (curFg.id === "wp") {
     availableXY.push({ x: x, y: y - 1 });
+
+    checkEnemyFigure([
+      { id: "wp", x: x - 1, y: y - 1 },
+      { id: "wp", x: x + 1, y: y - 1 }
+    ])
+
+    console.log(availableXY);
   }
 
   if (curFg.id === "wp" && isInitialPosition) {
@@ -44,12 +66,14 @@ export function identificateAvailableCells(props) {
     }
   }
 
+
+
   const availableCells = availableXY.map(({ x, y }) => ({
     letter: boardLetters[x],
     number: boardNumbers[y],
   }));
 
-  setAciveCells(availableCells);
+  setActiveCells(availableCells);
 
   return;
 }
