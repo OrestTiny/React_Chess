@@ -14,10 +14,7 @@ function Board() {
   const stepSize = 12.5;
   let positionsFigure = [];
   const square = (el, couples, squareCoord) => {
-    const isActive = activeCells.some(
-      (ac) =>
-        ac.letter === squareCoord.letter && ac.number === squareCoord.number
-    );
+    const isActive = activeCells.some((ac) => ac.letter === squareCoord.letter && ac.number === squareCoord.number);
 
     return (
       <div
@@ -25,12 +22,23 @@ function Board() {
         key={el}
         style={{ backgroundColor: isActive ? "red" : "" }}
         onClick={() => {
+
           if (actionStarted > -1 && isActive) {
             setPositionsFigure((oldFigures) => {
               oldFigures[actionStarted].letter = squareCoord.letter;
               oldFigures[actionStarted].number = squareCoord.number;
+
+              const updatedFigures = oldFigures.filter(item =>
+                item.id.split('')[0] !== oldFigures[actionStarted].id.split('')[0] && item.letter === squareCoord.letter && item.number === squareCoord.number
+              );
+
+              if (updatedFigures) {
+                delete oldFigures[oldFigures.indexOf(updatedFigures[0])];
+              }
+
               return oldFigures;
             });
+
             setActiveCells([]);
             setActionStarted(-1);
             setIsWhiteSide(!isWhiteSide);
@@ -82,7 +90,7 @@ function Board() {
   }
 
   const handleFigureClick = (data, index) => {
-    identificateAvailableCells({ data, figurePosition, setActiveCells });
+    identificateAvailableCells({ data, figurePosition, setActiveCells, isWhiteSide });
     setActionStarted(index);
   };
 

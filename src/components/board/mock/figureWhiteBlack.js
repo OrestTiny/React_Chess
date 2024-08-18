@@ -129,15 +129,11 @@ const figureWhiteBlack = [
     id: 'wp',
     letter: "a",
     number: 7,
-    started: false,
-    active: false
   },
   {
     id: 'wp',
     letter: "b",
     number: 7,
-    started: false,
-    active: false
   },
   {
     id: 'wp',
