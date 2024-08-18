@@ -105,34 +105,20 @@ export function identificateAvailableCells(props) {
     availableXY.push({ x: x + 2, y: y - 1 });
   }
 
-
-  if (curFg.id === "wn" || curFg.id === "bn") {
-    availableXY.push({ x: x - 1, y: y - 2 });
-    availableXY.push({ x: x - 1, y: y + 2 });
-
-    availableXY.push({ x: x + 1, y: y - 2 });
-    availableXY.push({ x: x + 1, y: y + 2 });
-
-    availableXY.push({ x: x - 2, y: y + 1 });
-    availableXY.push({ x: x - 2, y: y - 1 });
-
-    availableXY.push({ x: x + 2, y: y + 1 });
-    availableXY.push({ x: x + 2, y: y - 1 });
-  }
-
-
   if (curFg.id === "wr" || curFg.id === "br") {
 
     for (let i = x + 1; i < 8; i++) {
       if (checkCellValid({ x: i, y })) {
+        availableXY.push({ x: i, y });
         break;
       } else {
         availableXY.push({ x: i, y });
       }
     }
 
-    for (let i = y - 1; i > 0; i--) {
+    for (let i = y - 1; i >= 0; i--) {
       if (checkCellValid({ x, y: i })) {
+        availableXY.push({ x, y: i });
         break;
       } else {
         availableXY.push({ x, y: i });
