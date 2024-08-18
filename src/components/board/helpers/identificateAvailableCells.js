@@ -5,7 +5,7 @@ import {
 } from "../mock/figureWhiteBlack";
 
 export function identificateAvailableCells(props) {
-  const { data: curFg, figurePosition, setActiveCells, isWhiteSide } = props;
+  const { data: curFg, figurePosition, setActiveCells } = props;
   let availableCellsValid = [];
   const x = boardLetters.findIndex((item) => item === curFg.letter);
   const y = boardNumbers.findIndex((item) => item === curFg.number);
@@ -32,7 +32,6 @@ export function identificateAvailableCells(props) {
       availableXY.push({
         x: boardLetters.indexOf(item.letter),
         y: boardNumbers.indexOf(item.number),
-        isAttack: true
       });
     });
   }
@@ -55,7 +54,9 @@ export function identificateAvailableCells(props) {
 
 
   if (curFg.id === "wp") {
-    availableXY.push({ x: x, y: y - 1 });
+    availableXY.push({
+      x: x, y: y - 1, isAttack: false
+    });
 
     checkEnemyFigure([
       { id: "wp", x: x - 1, y: y - 1 },
@@ -64,11 +65,11 @@ export function identificateAvailableCells(props) {
   }
 
   if (curFg.id === "wp" && isInitialPosition) {
-    availableXY.push({ x: x, y: y - 2 });
+    availableXY.push({ x: x, y: y - 2, isAttack: false });
   }
 
   if (curFg.id === "bp") {
-    availableXY.push({ x: x, y: y + 1 });
+    availableXY.push({ x: x, y: y + 1, isAttack: false });
 
     checkEnemyFigure([
       { id: "bp", x: x - 1, y: y + 1 },
@@ -77,17 +78,80 @@ export function identificateAvailableCells(props) {
   }
 
   if (curFg.id === "bp" && isInitialPosition) {
-    availableXY.push({ x: x, y: y + 2 });
+    availableXY.push({ x: x, y: y + 2, isAttack: false });
   }
 
   if (curFg.id === "wq" || curFg.id === "bq") {
-    for (let i = 0; i < 8; i++) {
-      availableXY.push({ x: i, y });
-      availableXY.push({ x, y: i });
-      availableXY.push({ x: x - i, y: y - i });
-      availableXY.push({ x: x + i, y: y - i });
-      availableXY.push({ x: x - i, y: y + i });
-      availableXY.push({ x: x + i, y: y + i });
+    for (let i = x + 1; i < 8; i++) {
+      if (checkCellValid({ x: i, y })) {
+        availableXY.push({ x: i, y });
+        break;
+      } else {
+        availableXY.push({ x: i, y });
+      }
+    }
+
+    for (let i = x - 1; i >= 0; i--) {
+      if (checkCellValid({ x: i, y })) {
+        availableXY.push({ x: i, y });
+        break;
+      } else {
+        availableXY.push({ x: i, y });
+      }
+    }
+
+    for (let i = y - 1; i >= 0; i--) {
+      if (checkCellValid({ x, y: i })) {
+        availableXY.push({ x, y: i });
+        break;
+      } else {
+        availableXY.push({ x, y: i });
+      }
+    }
+
+    for (let i = y + 1; i <= 8; i++) {
+      if (checkCellValid({ x, y: i })) {
+        availableXY.push({ x, y: i });
+        break;
+      } else {
+        availableXY.push({ x, y: i });
+      }
+    }
+
+    for (let i = 1; i < 8; i++) {
+      if (checkCellValid({ x: x + i, y: y + i })) {
+        availableXY.push({ x: x + i, y: y + i });
+        break;
+      } else {
+        availableXY.push({ x: x + i, y: y + i });
+      }
+    }
+
+    for (let i = 1; i < 8; i++) {
+      if (checkCellValid({ x: x - i, y: y - i })) {
+        availableXY.push({ x: x - i, y: y - i });
+        break;
+      } else {
+        availableXY.push({ x: x - i, y: y - i });
+      }
+    }
+
+    for (let i = 1; i < 8; i++) {
+      if (checkCellValid({ x: x - i, y: y + i })) {
+        availableXY.push({ x: x - i, y: y + i });
+        break;
+      } else {
+        availableXY.push({ x: x - i, y: y + i });
+      }
+    }
+
+    for (let i = 1; i < 8; i++) {
+      if (checkCellValid({ x: x + i, y: y - i })) {
+        availableXY.push({ x: x + i, y: y - i });
+        break;
+      } else {
+        availableXY.push({ x: x + i, y: y - i });
+      }
     }
   }
 
@@ -107,6 +171,7 @@ export function identificateAvailableCells(props) {
 
   if (curFg.id === "wr" || curFg.id === "br") {
 
+    // x+
     for (let i = x + 1; i < 8; i++) {
       if (checkCellValid({ x: i, y })) {
         availableXY.push({ x: i, y });
@@ -116,6 +181,17 @@ export function identificateAvailableCells(props) {
       }
     }
 
+    // x-
+    for (let i = x - 1; i >= 0; i--) {
+      if (checkCellValid({ x: i, y })) {
+        availableXY.push({ x: i, y });
+        break;
+      } else {
+        availableXY.push({ x: i, y });
+      }
+    }
+
+    // y-
     for (let i = y - 1; i >= 0; i--) {
       if (checkCellValid({ x, y: i })) {
         availableXY.push({ x, y: i });
@@ -124,14 +200,79 @@ export function identificateAvailableCells(props) {
         availableXY.push({ x, y: i });
       }
     }
+
+    // y+
+    for (let i = y + 1; i <= 8; i++) {
+      if (checkCellValid({ x, y: i })) {
+        availableXY.push({ x, y: i });
+        break;
+      } else {
+        availableXY.push({ x, y: i });
+      }
+    }
+
+  }
+
+  if (curFg.id === "wb" || curFg.id === "bb") {
+    for (let i = 1; i < 8; i++) {
+      if (checkCellValid({ x: x + i, y: y + i })) {
+        availableXY.push({ x: x + i, y: y + i });
+        break;
+      } else {
+        availableXY.push({ x: x + i, y: y + i });
+      }
+    }
+
+    for (let i = 1; i < 8; i++) {
+      if (checkCellValid({ x: x - i, y: y - i })) {
+        availableXY.push({ x: x - i, y: y - i });
+        break;
+      } else {
+        availableXY.push({ x: x - i, y: y - i });
+      }
+    }
+
+    for (let i = 1; i < 8; i++) {
+      if (checkCellValid({ x: x - i, y: y + i })) {
+        availableXY.push({ x: x - i, y: y + i });
+        break;
+      } else {
+        availableXY.push({ x: x - i, y: y + i });
+      }
+    }
+
+    for (let i = 1; i < 8; i++) {
+      if (checkCellValid({ x: x + i, y: y - i })) {
+        availableXY.push({ x: x + i, y: y - i });
+        break;
+      } else {
+        availableXY.push({ x: x + i, y: y - i });
+      }
+    }
+  }
+
+  if (curFg.id === "wk" || curFg.id === "bk") {
+    availableXY.push({ x: x, y: y + 1 });
+    availableXY.push({ x: x, y: y - 1 });
+    availableXY.push({ x: x - 1, y: y });
+    availableXY.push({ x: x + 1, y: y });
+
+    availableXY.push({ x: x - 1, y: y + 1 });
+    availableXY.push({ x: x + 1, y: y + 1 });
+    availableXY.push({ x: x - 1, y: y - 1 });
+    availableXY.push({ x: x + 1, y: y - 1 });
   }
 
   const availableCells = availableXY.map((item) => {
-    return {
+    const obj = {
       id: curFg.id,
       letter: boardLetters[item.x],
-      number: boardNumbers[item.y],
+      number: boardNumbers[item.y]
     }
+
+    if (!item.isAttack) obj.isAttack = item.isAttack;
+
+    return obj;
   }).filter(item => item.letter !== undefined && item.number !== undefined);
 
 
@@ -140,15 +281,27 @@ export function identificateAvailableCells(props) {
       if (position === undefined) return;
 
       return position.letter === item.letter && position.number === item.number && position.id.split('')[0] === item.id.split('')[0];
-
     });
 
     return figure ? null : item;
   }).filter(item => item !== null);
 
 
-  console.log(availableCellsValid);
+  if (availableCells.some((item) => item.isAttack === false)) {
 
+    console.log(availableCells);
+
+    availableCellsValid = availableCells.map((item) => {
+      const figure = figurePosition.find((position) => {
+        if (position === undefined) return;
+        if (item.isAttack !== false) return;
+
+        return position.letter === item.letter && position.number === item.number && position.id.split('')[0] !== item.id.split('')[0];
+      });
+
+      return figure ? null : item;
+    }).filter(item => item !== null);
+  }
 
   setActiveCells(availableCellsValid);
 
